@@ -3,6 +3,8 @@ const {StatusCodes} = require('http-status-codes');
 const CustomError = require('../errors')
 const {attachCookiesToResponse, createTokenUser} = require('../utils')
 
+
+//!register
 const register = async(req,res)=>{
     const {email , name , password} = req.body;
 
@@ -24,6 +26,7 @@ const register = async(req,res)=>{
     res.status(StatusCodes.CREATED).json({ user:tokenUser });
 }
 
+//!login
 const login = async (req, res) => {
     const {email,password} = req.body;
 
@@ -44,9 +47,10 @@ const login = async (req, res) => {
 
     const tokenUser = createTokenUser(user)
     attachCookiesToResponse({res, user:tokenUser})
-    res.status(StatusCodes.CREATED).json({ user:tokenUser });
+    res.status(StatusCodes.OK).json({ user:tokenUser });
 };
 
+//!logout
 const logout = async (req, res) => {
   res.cookie('token', 'logout', {
     httpOnly:true,
