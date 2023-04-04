@@ -25,11 +25,28 @@ const showCurrentUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  res.send(req.body);
+  res.status(StatusCodes.OK).json({})
 };
 
 const updateUserPassword = async (req, res) => {
-  res.send(req.body);
+  const {oldPassword, newPassword} = req.body;
+
+  if (!oldPassword || !newPassword) {
+    throw new CustomError.BadRequestError("Please provide old and new password");
+  }
+
+  const user = await User.findOne({_id:req.user.userId})
+
+  const isPasswordCorrect = await user.comparePassword(oldPassword)
+
+  if(!isPasswordCorrect){
+    throw new CustomError.UnauthenticatedError('Invalid Credentials')
+  }
+
+  user.password = newPassword;
+  await user.save() // bunu kullanarak model'deki pre('save') ile password hashlemesi yaptırdık.
+
+  res.status(StatusCodes.OK).json({msg:'Success! Password Updated!'});
 };
 
 module.exports = {
