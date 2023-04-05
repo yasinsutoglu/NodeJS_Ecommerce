@@ -35,7 +35,9 @@ const ReviewSchema = new mongoose.Schema({
 
 ReviewSchema.index({product:1, user:1}, {unique:true}) //! her product ve user icin sadece 1 tane review olabilecek!
 
+//* modelde tanımlanan instance method'dan farklı constructor'a tanımlanır statics method
 ReviewSchema.statics.calculateAverageRating = async function(productId){
+  //!AGGREGATION PIPELINE
   const result = await this.aggregate([
     {$match:{
       product:productId,
@@ -46,7 +48,7 @@ ReviewSchema.statics.calculateAverageRating = async function(productId){
       numOfReviews:{$sum:1}
     }}
   ]);
-  
+
   try {
     await this.model("Product").findOneAndUpdate(
       { _id: productId },
