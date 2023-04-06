@@ -31,7 +31,7 @@
 - Javascript
 -NodeJS, ExpressJS
 -MongoDB
--SwaggerUI
+-docgen
 -Render Deployment
 
 ### At the end of the project, i will be able to;
