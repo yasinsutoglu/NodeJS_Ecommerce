@@ -124,6 +124,13 @@ npm start
 
 - you should see "Server is listening ...." text
 
+
+```sh
+ For documentation use docgen
+```
+
+- docgen build -i ecommerce.postman_collection.json -o ~/Desktop/ecommerce.md -m
+
 ## Author
 
 👤 **Yasin Sutoglu**
